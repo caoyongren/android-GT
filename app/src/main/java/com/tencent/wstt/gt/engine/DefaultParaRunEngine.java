@@ -90,6 +90,7 @@ public class DefaultParaRunEngine {
 				if (0 != len) {
 					for (OutPara op : enable_default_ops) {
 						String value = refreshDefaultOutParasValue(op);
+						Log.i("Smaster", "default value" + op.getFunctionId());
 						op.setValue(value);
 					}
 				} else {
@@ -122,7 +123,7 @@ public class DefaultParaRunEngine {
 		}
 
 		String key = para.getKey();
-		Log.i("Smaster", "key" + key);
+		Log.i("Smaster", "key=================" + key);
 		String value = "";
 
 		if (OutPara.DISPLAY_DISABLE != para.getDisplayProperty()

@@ -23,9 +23,7 @@
  */
 package com.tencent.wstt.gt.engine;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import android.util.Log;
 
 import com.tencent.wstt.gt.GTApp;
 import com.tencent.wstt.gt.OutPara;
@@ -39,6 +37,10 @@ import com.tencent.wstt.gt.manager.Client;
 import com.tencent.wstt.gt.manager.ClientManager;
 import com.tencent.wstt.gt.manager.OpPerfBridge;
 import com.tencent.wstt.gt.utils.CommonString;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ProcPerfParaRunEngine {
 
@@ -139,6 +141,7 @@ public class ProcPerfParaRunEngine {
 									+ AUTManager.pNames[i])
 							.getProcessCpuUsage(
 									Integer.valueOf(AUTManager.pIds[i]));
+					Log.i("Smaster", "getProcessCpuUsage" + value);
 					long tempValue = Double.valueOf(
 							(Double.valueOf(value.substring(0,
 									value.length() - 1)) * 100))
@@ -165,9 +168,7 @@ public class ProcPerfParaRunEngine {
 
 					if (! hasCpuObservered)
 					{
-						 CpuUtils.cpuInfoMap
-							.get(tempCpuKey).getProcessCpuUsage(
-									Integer.valueOf(AUTManager.pIds[i]));
+						 CpuUtils.cpuInfoMap.get(tempCpuKey).getProcessCpuUsage(Integer.valueOf(AUTManager.pIds[i]));
 					}
 
 					long tempValue = CpuUtils.cpuInfoMap.get(tempCpuKey).getJif();

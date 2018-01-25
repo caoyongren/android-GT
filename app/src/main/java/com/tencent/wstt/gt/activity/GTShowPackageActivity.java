@@ -23,10 +23,6 @@
  */
 package com.tencent.wstt.gt.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -35,6 +31,7 @@ import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,8 +52,15 @@ import com.tencent.wstt.gt.manager.ClientManager;
 import com.tencent.wstt.gt.manager.SingleInstanceClientFactory;
 import com.tencent.wstt.gt.utils.AppInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
 @SuppressLint("HandlerLeak")
 public class GTShowPackageActivity extends GTBaseActivity {
+
+	private Context mContext = this;
+
 	private ArrayList<AppInfo> dataList = new ArrayList<AppInfo>();
 	ArrayList<AppInfo> appList = new ArrayList<AppInfo>();
 	private ProgressDialog proDialog;
@@ -64,8 +68,9 @@ public class GTShowPackageActivity extends GTBaseActivity {
 	Handler updateHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			ListView app_listView = (ListView) findViewById(R.id.listview);
-			app_listView.setDividerHeight(10);  
-			AppAdapter appAdapter = new AppAdapter(GTShowPackageActivity.this,
+			app_listView.setDividerHeight(10);
+
+			AppAdapter appAdapter = new AppAdapter(mContext,
 					appList);
 			app_listView.setDividerHeight(5);
 			if (app_listView != null) {
@@ -74,6 +79,10 @@ public class GTShowPackageActivity extends GTBaseActivity {
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
+						Log.i("Smaster", "arg2" + arg2);
+						/**
+						 * 在listView中的位置序号
+						 * */
 						backToSetting(arg2);
 					}
 				});
@@ -185,9 +194,15 @@ public class GTShowPackageActivity extends GTBaseActivity {
 		}
 	}
 
+	/**
+	 * 选中之后的操作。
+	 * 应用的 icon name
+	 *
+	 * */
 	private void backToSetting(int pos) {
 		AppInfo appSelected = dataList.get(pos);
 		AUTManager.pkn= appSelected.packageName;
+		Log.i("Smaster", "packageName " + appSelected.packageName);
 		AUTManager.apn = appSelected.appName;
 		AUTManager.appic = appSelected.appIcon;
 		Env.CUR_APP_NAME = appSelected.packageName;

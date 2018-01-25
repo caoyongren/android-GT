@@ -35,9 +35,9 @@ public class AppInfo {
 
 		public void print()
 	{
-		Log.v("app","Name:"+appName+" Package:"+packageName);
-		Log.v("app","Name:"+appName+" versionName:"+versionName);
-		Log.v("app","Name:"+appName+" versionCode:"+versionCode);
+		Log.v("appSmaster","Name:"+appName+" Package:"+packageName);
+		Log.v("appSmaster","Name:"+appName+" versionName:"+versionName);
+		Log.v("appSmaster","Name:"+appName+" versionCode:"+versionCode);
 	}
     
 }

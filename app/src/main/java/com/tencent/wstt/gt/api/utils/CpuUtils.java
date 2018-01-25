@@ -223,6 +223,7 @@ public class CpuUtils {
 
 	public String[] getProcessCpuAction(int pid) {
 		String cpuPath = "/proc/" + pid + "/stat";
+		Log.i("SmasterPath", "cpuPath" + cpuPath);
 		String cpu = "";
 		String[] result = new String[3];
 
@@ -255,6 +256,7 @@ public class CpuUtils {
 			e.printStackTrace();
 		}
 		FileUtil.closeReader(localBufferedReader);
+		Log.i("Smaster", "getProcessCpuAction" + result);
 		return result;
 	}
 
@@ -300,43 +302,36 @@ public class CpuUtils {
 	}
 
 	public String getProcessCpuUsage(int pid) {
-
 		String result = "";
 		String[] result1 = null;
 		String[] result2 = null;
 		if (pid >= 0) {
-
 			result1 = getProcessCpuAction(pid);
 			if (null != result1) {
-				pCpu = Double.parseDouble(result1[1])
-						+ Double.parseDouble(result1[2]);
+				pCpu = Double.parseDouble(result1[1]) + Double.parseDouble(result1[2]);
 			}
 			result2 = getCpuAction();
 			if (null != result2) {
 				aCpu = 0.0;
 				for (int i = 2; i < result2.length; i++) {
-
 					aCpu += Double.parseDouble(result2[i]);
 				}
 			}
 			double usage = 0.0;
 			if ((aCpu - o_aCpu) != 0) {
-				usage = DoubleUtils.div(((pCpu - o_pCpu) * 100.00),
-						(aCpu - o_aCpu), 2);
+				usage = DoubleUtils.div(((pCpu - o_pCpu) * 100.00), (aCpu - o_aCpu), 2);
 				if (usage < 0) {
 					usage = 0;
-				}
-				else if (usage > 100)
-				{
+				} else if (usage > 100) {
 					usage = 100;
 				}
-
 			}
 			o_pCpu = pCpu;
 			o_aCpu = aCpu;
 			result = String.valueOf(usage) + "%";
 		}
 		p_jif = pCpu;
+		Log.i("Smaster", "getProcessCpuUsage" + result + "pid" + pid);
 		return result;
 	}
 
@@ -367,7 +362,5 @@ public class CpuUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }
